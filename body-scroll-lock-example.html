@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+<body>
+  <div id="app">
+    <v-app>
+      <v-main>
+        <v-container>
+          <v-row justify="center">
+            <v-dialog v-model="dialog" scrollable max-width="300px">
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  color="primary"
+                  dark
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  Open Dialog
+                </v-btn>
+              </template>
+              <v-card>
+                <v-card-title>Select Country</v-card-title>
+                <v-divider></v-divider>
+                <v-card-text style="height: 300px;" class="body-scroll-lock"><!-- body-scroll-lock 클래스를 넣은 곳은 모두 적용된다. -->
+                  <v-radio-group v-model="dialogm1" column>
+                    <v-radio label="Bahamas, The" value="bahamas"></v-radio>
+                    <v-radio label="Bahrain" value="bahrain"></v-radio>
+                    <v-radio label="Bangladesh" value="bangladesh"></v-radio>
+                    <v-radio label="Barbados" value="barbados"></v-radio>
+                    <v-radio label="Belarus" value="belarus"></v-radio>
+                    <v-radio label="Belgium" value="belgium"></v-radio>
+                    <v-radio label="Belize" value="belize"></v-radio>
+                    <v-radio label="Benin" value="benin"></v-radio>
+                    <v-radio label="Bhutan" value="bhutan"></v-radio>
+                    <v-radio label="Bolivia" value="bolivia"></v-radio>
+                    <v-radio label="Bosnia and Herzegovina" value="bosnia"></v-radio>
+                    <v-radio label="Botswana" value="botswana"></v-radio>
+                    <v-radio label="Brazil" value="brazil"></v-radio>
+                    <v-radio label="Brunei" value="brunei"></v-radio>
+                    <v-radio label="Bulgaria" value="bulgaria"></v-radio>
+                    <v-radio label="Burkina Faso" value="burkina"></v-radio>
+                    <v-radio label="Burma" value="burma"></v-radio>
+                    <v-radio label="Burundi" value="burundi"></v-radio>
+                  </v-radio-group>
+                </v-card-text>
+                <v-divider></v-divider>
+                <v-card-actions>
+                  <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
+                  <v-btn color="blue darken-1" text @click="dialog = false">Save</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </v-row>
+
+          <!-- 페이지 스크롤이 생기도록 내용을 넣습니다. -->
+          <p v-for="index in 1000" :key="index">Hello world {{ index }}</p>
+        </v-container>
+      </v-main>
+      
+    </v-app>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/body-scroll-lock@3.0.3/lib/bodyScrollLock.min.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      vuetify: new Vuetify(),
+      data () {
+        return {
+          dialogm1: '',
+          dialog: false,
+        }
+      },
+      watch: {
+        dialog: function (newValue, oldValue) {
+          if (newValue) {
+            this.$nextTick(function() { // 처음에는 엘레멘트가 생성되어 있지 않으므로 nextTick 에서 엘레멘트가 생성된 후에 처리하도록 해야한다.
+              var elements = document.getElementsByClassName('body-scroll-lock')
+              for (var i = 0; i < elements.length; ++i) {
+                bodyScrollLock.disableBodyScroll(elements[i])
+              }
+            })
+          } else {
+            var elements = document.getElementsByClassName('body-scroll-lock')
+            for (var i = 0; i < elements.length; ++i) {
+              bodyScrollLock.enableBodyScroll(elements[i])
+            }
+          }
+        }
+      }
+    })
+  </script>
+</body>
+</html>
